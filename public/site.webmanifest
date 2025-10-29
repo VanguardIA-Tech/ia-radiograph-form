@@ -1,24 +1,21 @@
 {
   "name": "VanguardIA",
   "short_name": "VanguardIA",
-  "description": "Raio-X de Eficiência com IA — relatório personalizado em minutos.",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0b1220",
   "icons": [
     {
-      "src": "/android-chrome-192x192-light.png",
+      "src": "/android-chrome-192x192-dark.png?v=3",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/android-chrome-512x512-light.png",
+      "src": "/android-chrome-512x512-dark.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
-  ]
+  ],
+  "theme_color": "#0b1220",
+  "background_color": "#ffffff",
+  "display": "standalone"
 }
