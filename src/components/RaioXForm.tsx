@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import FormHeader from "./FormHeader";
@@ -18,7 +17,6 @@ const RaioXForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<any>({});
 
-  // Load saved data from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -30,7 +28,6 @@ const RaioXForm = () => {
     }
   }, []);
 
-  // Save data to localStorage whenever it changes
   useEffect(() => {
     if (Object.keys(formData).length > 0) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
@@ -131,16 +128,9 @@ const RaioXForm = () => {
     }
 
     try {
-      // Here you would send the data to your backend
-      // For now, we'll just simulate a successful submission
       console.log("Form submitted:", formData);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Clear localStorage after successful submission
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       localStorage.removeItem(STORAGE_KEY);
-      
       setIsSubmitted(true);
       toast.success("Raio-X gerado com sucesso!");
     } catch (error) {
@@ -175,71 +165,77 @@ const RaioXForm = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-2xl p-8 shadow-strong">
-          <FormSuccess />
-        </Card>
-      </div>
+      <section className="flex min-h-screen w-full flex-col bg-background">
+        <div className="flex-1 overflow-y-auto px-4 py-6 md:px-12 md:py-10 lg:px-20">
+          <div className="flex h-full flex-col justify-center rounded-3xl border border-border bg-card shadow-strong px-6 py-10 md:px-12 md:py-14 lg:px-20">
+            <FormSuccess />
+          </div>
+        </div>
+      </section>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 py-12">
-      <Card className="w-full max-w-4xl p-6 md:p-8 lg:p-12 shadow-strong">
-        <div className="space-y-8">
-          <FormHeader />
-          
-          <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
+    <section className="flex min-h-screen w-full flex-col bg-background">
+      <div className="flex-1 overflow-y-auto px-4 py-6 md:px-12 md:py-10 lg:px-20">
+        <div className="flex h-full flex-col rounded-3xl border border-border bg-card shadow-strong px-6 py-8 md:px-12 md:py-12 lg:px-20">
+          <div className="flex h-full flex-col">
+            <div className="flex-1 space-y-8">
+              <FormHeader />
 
-          <div className="min-h-[500px]">
-            {currentStep === 1 && (
-              <FormStep1 formData={formData} updateFormData={updateFormData} />
-            )}
-            {currentStep === 2 && (
-              <FormStep2 formData={formData} updateFormData={updateFormData} />
-            )}
-            {currentStep === 3 && (
-              <FormStep3 formData={formData} updateFormData={updateFormData} />
-            )}
-          </div>
+              <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
 
-          <div className="flex gap-4 pt-6 border-t border-border">
-            {currentStep > 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleBack}
-                className="flex-1 h-12"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Voltar
-              </Button>
-            )}
-            
-            {currentStep < TOTAL_STEPS ? (
-              <Button
-                type="button"
-                onClick={handleNext}
-                disabled={!canProceed()}
-                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-white"
-              >
-                Próximo
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!canProceed()}
-                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-white font-bold"
-              >
-                🚀 Gerar meu Raio-X agora
-              </Button>
-            )}
+              <div className="min-h-[500px]">
+                {currentStep === 1 && (
+                  <FormStep1 formData={formData} updateFormData={updateFormData} />
+                )}
+                {currentStep === 2 && (
+                  <FormStep2 formData={formData} updateFormData={updateFormData} />
+                )}
+                {currentStep === 3 && (
+                  <FormStep3 formData={formData} updateFormData={updateFormData} />
+                )}
+              </div>
+            </div>
+
+            <div className="mt-6 flex gap-4 border-t border-border pt-6">
+              {currentStep > 1 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleBack}
+                  className="flex-1 h-12"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Voltar
+                </Button>
+              )}
+
+              {currentStep < TOTAL_STEPS ? (
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!canProceed()}
+                  className="flex-1 h-12 bg-gradient-primary text-white transition-opacity hover:opacity-90"
+                >
+                  Próximo
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!canProceed()}
+                  className="flex-1 h-12 bg-gradient-primary text-white font-bold transition-opacity hover:opacity-90"
+                >
+                  🚀 Gerar meu Raio-X agora
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-      </Card>
-    </div>
+      </div>
+    </section>
   );
 };
 
