@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { useIsMobile } from "../hooks/use-mobile";
-import FullscreenModal from "../components/FullscreenModal";
+import FullscreenModal from "../components/ui/FullscreenModal";
 import RaioXForm from "../components/RaioXForm";
 
 const Index = () => {
