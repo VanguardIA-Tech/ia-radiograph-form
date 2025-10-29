@@ -95,7 +95,7 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
       </div>
 
       <p className="text-sm text-muted-foreground text-center">
-        👉 Faltam só 2 etapas
+        Faltam só 2 etapas
       </p>
     </div>
   );

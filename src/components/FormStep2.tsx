@@ -163,7 +163,7 @@ const FormStep2 = ({ formData, updateFormData }: FormStep2Props) => {
       </div>
 
       <p className="text-sm text-muted-foreground text-center">
-        👉 Faltam 30 segundos para o seu Raio-X personalizado
+        Faltam 30 segundos para o seu Raio-X personalizado
       </p>
     </div>
   );
