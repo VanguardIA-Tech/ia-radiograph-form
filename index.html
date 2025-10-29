@@ -1,3 +1,4 @@
+dark, dark -> light) e theme-color por esquema.">
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,6 +20,39 @@
     <meta name="twitter:title" content="Raio-X de Eficiência com IA | VanguardIA" />
     <meta name="twitter:description" content="Descubra o potencial da IA para sua empresa em 2 minutos." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Inverted theme favicons:
+         - when browser is in light mode -> use *dark* favicons
+         - when browser is in dark mode  -> use *light* favicons
+    -->
+    <!-- 32x32 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-dark.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-light.png" media="(prefers-color-scheme: dark)">
+
+    <!-- 16x16 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-dark.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-light.png" media="(prefers-color-scheme: dark)">
+
+    <!-- general .ico fallback (used when no media queries supported) -->
+    <link rel="icon" href="/favicon-light.ico">
+
+    <!-- Android / Chrome icons (inverted mapping) -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-dark.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-light.png" media="(prefers-color-scheme: dark)">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-dark.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-light.png" media="(prefers-color-scheme: dark)">
+
+    <!-- Apple touch icons (inverted mapping) -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: light)">
+    <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: dark)">
+
+    <!-- Web manifest -->
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Theme color (inverted to match favicons): light mode -> dark color, dark mode -> light color -->
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)">
   </head>
 
   <body>
