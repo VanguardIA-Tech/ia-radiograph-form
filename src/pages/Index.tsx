@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
-import FullscreenModal from "@/components/FullscreenModal";
-import RaioXForm from "@/components/RaioXForm";
+import { Button } from "../components/ui/button";
+import { useIsMobile } from "../hooks/use-mobile";
+import { FullscreenModal, RaioXForm } from "../components";
 
 const Index = () => {
   const isMobile = useIsMobile();
