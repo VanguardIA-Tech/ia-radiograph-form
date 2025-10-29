@@ -79,7 +79,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
       </div>
 
       <div className="bg-gradient-primary p-6 rounded-xl text-white space-y-3">
-        <h3 className="font-bold text-lg">📊 Raio-X de Eficiência com IA</h3>
+        <h3 className="font-bold text-lg">Raio-X de Eficiência com IA</h3>
         <p className="text-sm text-white/90">
           Gratuito e personalizado. Em 5 minutos, no seu WhatsApp e e-mail.
         </p>
