@@ -23,7 +23,7 @@ const FormSuccess = () => {
 
       <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
-          Perfeito! 🎉
+          Perfeito!
         </h2>
         <p className="text-lg text-muted-foreground">
           Estamos processando seu Raio-X agora{dots}
@@ -32,7 +32,7 @@ const FormSuccess = () => {
 
       <div className="bg-secondary/50 p-6 rounded-xl border border-border space-y-2">
         <p className="text-sm font-medium text-foreground">
-          📱 Em até 5 minutos você receberá no WhatsApp e e-mail:
+          Em até 5 minutos você receberá no WhatsApp e e-mail:
         </p>
         <ul className="text-sm text-muted-foreground space-y-1 text-left max-w-md mx-auto">
           <li>✓ Análise personalizada da sua empresa</li>
