@@ -32,9 +32,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-dark.png" media="(prefers-color-scheme: light)">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-light.png" media="(prefers-color-scheme: dark)">
 
-    <!-- general .ico fallback (used when no media queries supported) -->
-    <link rel="icon" href="/favicon-light.ico">
-
     <!-- Android / Chrome icons (inverted mapping) -->
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-dark.png" media="(prefers-color-scheme: light)">
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-light.png" media="(prefers-color-scheme: dark)">
@@ -45,6 +42,13 @@
     <!-- Apple touch icons (inverted mapping) -->
     <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: light)">
     <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: dark)">
+
+    <!-- ICO fallbacks (inverted mapping) - improves compatibility with browsers that prefer .ico -->
+    <link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/favicon-light.ico" media="(prefers-color-scheme: dark)">
+
+    <!-- general .ico fallback (used when no media queries supported) -->
+    <link rel="shortcut icon" href="/favicon-light.ico">
 
     <!-- Web manifest -->
     <link rel="manifest" href="/site.webmanifest">
