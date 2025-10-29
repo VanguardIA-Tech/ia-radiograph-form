@@ -163,12 +163,18 @@ const RaioXForm = () => {
     }
   };
 
+  // FULL-SCREEN LAYOUT:
+  // - Root section occupies full viewport (100vw x 100vh).
+  // - The "card" fills the viewport with no outer padding; internal content scrolls.
+  // - Action bar (buttons) is fixed to the bottom of the card.
   if (isSubmitted) {
     return (
-      <section className="flex min-h-screen w-full flex-col bg-background">
-        <div className="flex-1 overflow-y-auto px-4 py-6 md:px-12 md:py-10 lg:px-20">
-          <div className="flex h-full flex-col justify-center rounded-3xl border border-border bg-card shadow-strong px-6 py-10 md:px-12 md:py-14 lg:px-20">
-            <FormSuccess />
+      <section className="min-h-screen min-w-screen w-screen h-screen bg-background">
+        <div className="h-full w-full bg-card border-border border-l border-t border-r border-b flex items-center justify-center">
+          <div className="w-full h-full overflow-auto px-6 py-8 md:px-12 md:py-12 lg:px-20">
+            <div className="max-w-5xl mx-auto">
+              <FormSuccess />
+            </div>
           </div>
         </div>
       </section>
@@ -176,62 +182,66 @@ const RaioXForm = () => {
   }
 
   return (
-    <section className="flex min-h-screen w-full flex-col bg-background">
-      <div className="flex-1 overflow-y-auto px-4 py-6 md:px-12 md:py-10 lg:px-20">
-        <div className="flex h-full flex-col rounded-3xl border border-border bg-card shadow-strong px-6 py-8 md:px-12 md:py-12 lg:px-20">
-          <div className="flex h-full flex-col">
-            <div className="flex-1 space-y-8">
-              <FormHeader />
+    <section className="min-h-screen min-w-screen w-screen h-screen bg-background">
+      <div className="h-full w-full bg-card border border-border flex flex-col">
+        {/* Scrollable content area */}
+        <div className="flex-1 overflow-y-auto px-6 py-8 md:px-12 md:py-12 lg:px-20">
+          <div className="max-w-6xl mx-auto">
+            <FormHeader />
 
+            <div className="mt-6">
               <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
-
-              <div className="min-h-[500px]">
-                {currentStep === 1 && (
-                  <FormStep1 formData={formData} updateFormData={updateFormData} />
-                )}
-                {currentStep === 2 && (
-                  <FormStep2 formData={formData} updateFormData={updateFormData} />
-                )}
-                {currentStep === 3 && (
-                  <FormStep3 formData={formData} updateFormData={updateFormData} />
-                )}
-              </div>
             </div>
 
-            <div className="mt-6 flex gap-4 border-t border-border pt-6">
-              {currentStep > 1 && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleBack}
-                  className="flex-1 h-12"
-                >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Voltar
-                </Button>
+            <div className="mt-8 min-h-[60vh]">
+              {currentStep === 1 && (
+                <FormStep1 formData={formData} updateFormData={updateFormData} />
               )}
-
-              {currentStep < TOTAL_STEPS ? (
-                <Button
-                  type="button"
-                  onClick={handleNext}
-                  disabled={!canProceed()}
-                  className="flex-1 h-12 bg-gradient-primary text-white transition-opacity hover:opacity-90"
-                >
-                  Próximo
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!canProceed()}
-                  className="flex-1 h-12 bg-gradient-primary text-white font-bold transition-opacity hover:opacity-90"
-                >
-                  🚀 Gerar meu Raio-X agora
-                </Button>
+              {currentStep === 2 && (
+                <FormStep2 formData={formData} updateFormData={updateFormData} />
+              )}
+              {currentStep === 3 && (
+                <FormStep3 formData={formData} updateFormData={updateFormData} />
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Action bar fixed to bottom of the card */}
+        <div className="w-full border-t border-border bg-card px-6 py-4 md:px-12 lg:px-20">
+          <div className="max-w-6xl mx-auto flex gap-4">
+            {currentStep > 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="flex-1 h-12"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Voltar
+              </Button>
+            )}
+
+            {currentStep < TOTAL_STEPS ? (
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className="flex-1 h-12 bg-gradient-primary text-white transition-opacity hover:opacity-90"
+              >
+                Próximo
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!canProceed()}
+                className="flex-1 h-12 bg-gradient-primary text-white font-bold transition-opacity hover:opacity-90"
+              >
+                🚀 Gerar meu Raio-X agora
+              </Button>
+            )}
           </div>
         </div>
       </div>
