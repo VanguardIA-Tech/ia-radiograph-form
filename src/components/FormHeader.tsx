@@ -1,4 +1,3 @@
-import { Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const FormHeader = () => {
@@ -6,8 +5,12 @@ const FormHeader = () => {
     <header className="space-y-4 pb-6 border-b border-border">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-primary flex items-center justify-center">
-            <Building2 className="w-6 h-6 text-primary-foreground" />
+          <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center overflow-hidden">
+            <img
+              src="https://res.cloudinary.com/dcg2hwh7x/image/upload/v1754072832/Avatar_e_Logos_Vanguardia_Prancheta_1_co%CC%81pia_19_fs9aqj.png"
+              alt="VanguardIA"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <h1 className="text-xl font-bold text-foreground">VanguardIA</h1>
