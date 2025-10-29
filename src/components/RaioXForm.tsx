@@ -1,0 +1,246 @@
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+import FormHeader from "./FormHeader";
+import FormProgress from "./FormProgress";
+import FormStep1 from "./FormStep1";
+import FormStep2 from "./FormStep2";
+import FormStep3 from "./FormStep3";
+import FormSuccess from "./FormSuccess";
+
+const STORAGE_KEY = "vanguardia-form-data";
+const TOTAL_STEPS = 3;
+
+const RaioXForm = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState<any>({});
+
+  // Load saved data from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        setFormData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Error loading saved form data:", e);
+      }
+    }
+  }, []);
+
+  // Save data to localStorage whenever it changes
+  useEffect(() => {
+    if (Object.keys(formData).length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+    }
+  }, [formData]);
+
+  const updateFormData = (field: string, value: any) => {
+    setFormData((prev: any) => ({ ...prev, [field]: value }));
+  };
+
+  const validateStep = (step: number): boolean => {
+    switch (step) {
+      case 1:
+        if (!formData.company?.trim()) {
+          toast.error("Por favor, preencha o nome da empresa");
+          return false;
+        }
+        if (!formData.role) {
+          toast.error("Por favor, selecione seu cargo");
+          return false;
+        }
+        if (!formData.employees) {
+          toast.error("Por favor, selecione o número de colaboradores");
+          return false;
+        }
+        if (!formData.sector) {
+          toast.error("Por favor, selecione o setor de atuação");
+          return false;
+        }
+        return true;
+
+      case 2:
+        if (!formData.priorityAreas || formData.priorityAreas.length === 0) {
+          toast.error("Por favor, selecione pelo menos uma área prioritária");
+          return false;
+        }
+        if (formData.priorityAreas.length > 3) {
+          toast.error("Por favor, selecione no máximo 3 áreas prioritárias");
+          return false;
+        }
+        if (!formData.focusAreas || formData.focusAreas.length === 0) {
+          toast.error("Por favor, selecione pelo menos uma frente de foco");
+          return false;
+        }
+        if (formData.aiUsage === undefined || formData.aiUsage === null) {
+          toast.error("Por favor, indique o nível de uso de IA");
+          return false;
+        }
+        if (!formData.bottleneck?.trim()) {
+          toast.error("Por favor, descreva o principal gargalo de eficiência");
+          return false;
+        }
+        return true;
+
+      case 3:
+        if (!formData.fullName?.trim()) {
+          toast.error("Por favor, preencha seu nome completo");
+          return false;
+        }
+        if (!formData.email?.trim() || !formData.email.includes("@")) {
+          toast.error("Por favor, preencha um e-mail válido");
+          return false;
+        }
+        if (!formData.whatsapp?.trim()) {
+          toast.error("Por favor, preencha seu WhatsApp");
+          return false;
+        }
+        if (!formData.lgpdConsent) {
+          toast.error("Por favor, aceite os termos de uso de dados");
+          return false;
+        }
+        return true;
+
+      default:
+        return true;
+    }
+  };
+
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      if (currentStep < TOTAL_STEPS) {
+        setCurrentStep((prev) => prev + 1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validateStep(currentStep)) {
+      return;
+    }
+
+    try {
+      // Here you would send the data to your backend
+      // For now, we'll just simulate a successful submission
+      console.log("Form submitted:", formData);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Clear localStorage after successful submission
+      localStorage.removeItem(STORAGE_KEY);
+      
+      setIsSubmitted(true);
+      toast.success("Raio-X gerado com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao enviar formulário. Tente novamente.");
+      console.error("Submit error:", error);
+    }
+  };
+
+  const canProceed = () => {
+    switch (currentStep) {
+      case 1:
+        return formData.company && formData.role && formData.employees && formData.sector;
+      case 2:
+        return (
+          formData.priorityAreas?.length > 0 &&
+          formData.priorityAreas?.length <= 3 &&
+          formData.focusAreas?.length > 0 &&
+          formData.aiUsage !== undefined &&
+          formData.bottleneck?.trim()
+        );
+      case 3:
+        return (
+          formData.fullName?.trim() &&
+          formData.email?.trim() &&
+          formData.whatsapp?.trim() &&
+          formData.lgpdConsent
+        );
+      default:
+        return false;
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl p-8 shadow-strong">
+          <FormSuccess />
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 py-12">
+      <Card className="w-full max-w-4xl p-6 md:p-8 lg:p-12 shadow-strong">
+        <div className="space-y-8">
+          <FormHeader />
+          
+          <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
+
+          <div className="min-h-[500px]">
+            {currentStep === 1 && (
+              <FormStep1 formData={formData} updateFormData={updateFormData} />
+            )}
+            {currentStep === 2 && (
+              <FormStep2 formData={formData} updateFormData={updateFormData} />
+            )}
+            {currentStep === 3 && (
+              <FormStep3 formData={formData} updateFormData={updateFormData} />
+            )}
+          </div>
+
+          <div className="flex gap-4 pt-6 border-t border-border">
+            {currentStep > 1 && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="flex-1 h-12"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar
+              </Button>
+            )}
+            
+            {currentStep < TOTAL_STEPS ? (
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-white"
+              >
+                Próximo
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!canProceed()}
+                className="flex-1 h-12 bg-gradient-primary hover:opacity-90 transition-opacity text-white font-bold"
+              >
+                🚀 Gerar meu Raio-X agora
+              </Button>
+            )}
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+};
+
+export default RaioXForm;
