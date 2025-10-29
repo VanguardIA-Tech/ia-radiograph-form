@@ -6,6 +6,7 @@
     <title>Raio-X de Eficiência com IA | VanguardIA</title>
     <meta name="description" content="Descubra o potencial da IA para sua empresa em 2 minutos. Receba um relatório personalizado de eficiência em até 5 minutos no WhatsApp e e-mail." />
     <meta name="author" content="Grupo VanguardIA" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,38 +21,39 @@
     <meta name="twitter:description" content="Descubra o potencial da IA para sua empresa em 2 minutos." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-    <!-- Inverted theme favicons:
-         - when browser is in light mode -> use *dark* favicons
-         - when browser is in dark mode  -> use *light* favicons
+    <!-- Inverted theme favicons with cache-busting (?v=2):
+         - light mode -> dark icons
+         - dark mode  -> light icons
     -->
     <!-- 32x32 -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-dark.png" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-dark.png?v=2" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-light.png?v=2" media="(prefers-color-scheme: dark)">
 
     <!-- 16x16 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-dark.png" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-dark.png?v=2" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-light.png?v=2" media="(prefers-color-scheme: dark)">
 
     <!-- Android / Chrome icons (inverted mapping) -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-dark.png" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-dark.png?v=2" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192-light.png?v=2" media="(prefers-color-scheme: dark)">
 
-    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-dark.png" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-dark.png?v=2" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512-light.png?v=2" media="(prefers-color-scheme: dark)">
 
     <!-- Apple touch icons (inverted mapping) -->
-    <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png" media="(prefers-color-scheme: light)">
-    <link rel="apple-touch-icon" href="/apple-touch-icon-light.png" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="/apple-touch-icon-dark.png?v=2" media="(prefers-color-scheme: light)">
+    <link rel="apple-touch-icon" href="/apple-touch-icon-light.png?v=2" media="(prefers-color-scheme: dark)">
 
-    <!-- ICO fallbacks (inverted mapping) - improves compatibility with browsers that prefer .ico -->
-    <link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: light)">
-    <link rel="icon" href="/favicon-light.ico" media="(prefers-color-scheme: dark)">
+    <!-- ICO fallbacks (inverted mapping) -->
+    <link rel="icon" href="/favicon-dark.ico?v=2" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/favicon-light.ico?v=2" media="(prefers-color-scheme: dark)">
 
-    <!-- general .ico fallback (used when no media queries supported) -->
-    <link rel="shortcut icon" href="/favicon-light.ico">
+    <!-- Default and shortcut fallbacks -->
+    <link rel="icon" href="/favicon-light.ico?v=2">
+    <link rel="shortcut icon" href="/favicon-light.ico?v=2">
 
     <!-- Web manifest -->
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/site.webmanifest?v=2">
 
     <!-- Theme color (inverted to match favicons): light mode -> dark color, dark mode -> light color -->
     <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: light)">
