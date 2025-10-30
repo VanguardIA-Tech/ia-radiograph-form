@@ -1,4 +1,4 @@
-import { CheckCircle2, ArrowRight, Linkedin, Instagram, Phone } from "lucide-react";
+import { CheckCircle2, Linkedin, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
@@ -22,8 +22,8 @@ const FormSuccess = () => {
             Perfeito. Seu Raio-X de Eficiência com IA está sendo preparado.
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Em até 5 minutos você receberá no WhatsApp e no seu e-mail o relatório completo
-            com oportunidades reais de automação e eficiência.
+            Em até 5 minutos você receberá no WhatsApp e no seu e-mail
+            o relatório completo com oportunidades reais de automação e eficiência.
           </p>
         </div>
       </section>
@@ -31,18 +31,16 @@ const FormSuccess = () => {
       {/* BLOCO 2 — CHAMADA PARA AÇÃO HUMANA */}
       <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-3">
         <h3 className="text-xl md:text-2xl font-bold text-foreground">
-          A próxima etapa é conversar com um dos nossos consultores sêniores de Eficiência com IA,
-          para empresas com mais de 30 colaboradores.
+          A próxima etapa é conversar com um dos nossos consultores sêniores de Eficiência com IA, para empresas com mais de 30 colaboradores.
         </h3>
         <p className="text-sm md:text-base text-muted-foreground">
-          Eles vão te mostrar como aplicar cada insight do relatório em um plano real de integração
-          com IA na sua empresa.
+          Eles vão te mostrar como aplicar cada insight do relatório
+          em um plano real de integração com IA na sua empresa.
         </p>
       </section>
 
       {/* BLOCO 3 — PROVA DE VALOR / CASES */}
       <section className="space-y-4">
-        <h3 className="text-lg md:text-xl font-bold text-foreground text-center">Resultados que entregamos</h3>
         <Carousel className="w-full max-w-4xl mx-auto">
           <CarouselContent>
             <CarouselItem className="md:basis-1/3">
@@ -55,14 +53,14 @@ const FormSuccess = () => {
             <CarouselItem className="md:basis-1/3">
               <div className="h-full rounded-xl border border-border bg-card p-5 shadow-soft flex items-center justify-center text-center">
                 <p className="text-sm md:text-base font-semibold">
-                  Silveira Athias — IA em 100% dos fluxos.
+                  Silveira Athias — IA em 100 % dos fluxos.
                 </p>
               </div>
             </CarouselItem>
             <CarouselItem className="md:basis-1/3">
               <div className="h-full rounded-xl border border-border bg-card p-5 shadow-soft flex items-center justify-center text-center">
                 <p className="text-sm md:text-base font-semibold">
-                  DO IT Hub — 300%+ de eficiência operacional.
+                  DO IT Hub — 300 % + de eficiência operacional.
                 </p>
               </div>
             </CarouselItem>
@@ -78,8 +76,8 @@ const FormSuccess = () => {
       <section className="space-y-5">
         <div className="rounded-xl border border-border p-6 md:p-8 bg-card">
           <p className="text-sm md:text-base text-foreground">
-            Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 empresas
-            selecionadas em 2026 para integração corporativa de IA no Brasil.
+            Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 
+            empresas selecionadas em 2026 para integração corporativa de IA no Brasil.
           </p>
         </div>
         <div className="flex justify-center">
@@ -88,7 +86,7 @@ const FormSuccess = () => {
             className="h-14 px-8 bg-gradient-primary hover:opacity-90 text-white font-bold"
             onClick={handleCTA}
           >
-            Garantir meu diagnóstico agora <ArrowRight className="ml-2 h-5 w-5" />
+            Garantir meu diagnóstico agora →
           </Button>
         </div>
       </section>
