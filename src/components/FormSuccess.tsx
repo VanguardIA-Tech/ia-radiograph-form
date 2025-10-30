@@ -2,9 +2,16 @@ import { CheckCircle2, Linkedin, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
+const calendlyUrl = (import.meta.env.VITE_CALENDLY_URL as string | undefined)?.trim();
+
 const FormSuccess = () => {
   const handleCTA = () => {
     window.open("https://wa.me/5591999999999", "_blank", "noopener,noreferrer");
+  };
+
+  const handleCalendly = () => {
+    const url = calendlyUrl || "https://calendly.com/";
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -29,7 +36,7 @@ const FormSuccess = () => {
       </section>
 
       {/* BLOCO 2 — CHAMADA PARA AÇÃO HUMANA */}
-      <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-3">
+      <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-4">
         <h3 className="text-xl md:text-2xl font-bold text-foreground">
           A próxima etapa é conversar com um dos nossos consultores sêniores de Eficiência com IA, para empresas com mais de 30 colaboradores.
         </h3>
@@ -37,6 +44,16 @@ const FormSuccess = () => {
           Eles vão te mostrar como aplicar cada insight do relatório
           em um plano real de integração com IA na sua empresa.
         </p>
+
+        <div className="pt-2">
+          <Button
+            size="lg"
+            onClick={handleCalendly}
+            className="h-12 px-6 bg-gradient-primary hover:opacity-90 text-white font-semibold w-full sm:w-auto"
+          >
+            Agendar Diagnóstico Completo (gratuito) → Calendly
+          </Button>
+        </div>
       </section>
 
       {/* BLOCO 3 — PROVA DE VALOR / CASES */}
