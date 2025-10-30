@@ -93,8 +93,7 @@ const FormSuccess = () => {
       <section className="space-y-5">
         <div className="rounded-xl border border-border p-6 md:p-8 bg-card">
           <p className="text-sm md:text-base text-foreground">
-            Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 
-            empresas selecionadas em 2026 para integração corporativa de IA no Brasil.
+            Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 empresas selecionadas para integração corporativa de IA no Brasil.
           </p>
         </div>
         <div className="flex justify-center">
