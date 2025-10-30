@@ -2,13 +2,84 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Phone, User } from "lucide-react";
+import { toast } from "sonner";
 
 interface FormStep3Props {
   formData: any;
   updateFormData: (field: string, value: any) => void;
 }
 
+const FREE_EMAIL_DOMAINS = new Set([
+  "gmail.com",
+  "gmail.com.br",
+  "hotmail.com",
+  "hotmail.com.br",
+  "outlook.com",
+  "outlook.com.br",
+  "live.com",
+  "live.com.br",
+  "yahoo.com",
+  "yahoo.com.br",
+  "icloud.com",
+  "aol.com",
+  "msn.com",
+  "bol.com.br",
+  "uol.com.br",
+  "terra.com.br"
+]);
+
+function getEmailDomain(email: string) {
+  const parts = String(email).toLowerCase().split("@");
+  if (parts.length !== 2) return null;
+  return parts[1].trim() || null;
+}
+
+function formatWhatsapp(value: string) {
+  const raw = String(value);
+  const digits = raw.replace(/\D/g, "");
+
+  let rest = digits;
+  let prefix = "";
+
+  // Mantém +55 se o usuário digitar (ou já tiver)
+  if (rest.startsWith("55")) {
+    prefix = "+55 ";
+    rest = rest.slice(2);
+  } else if (raw.trim().startsWith("+")) {
+    // Usuário começou com "+", mas não digitou 55 ainda
+    prefix = "+";
+  }
+
+  // Limitar a 2 (DDD) + 9 dígitos do celular
+  const ddd = rest.slice(0, 2);
+  const number = rest.slice(2, 11);
+
+  let formatted = prefix;
+  if (ddd) {
+    formatted += ddd + " ";
+  }
+  if (number.length > 5) {
+    formatted += number.slice(0, 5) + "-" + number.slice(5);
+  } else if (number.length > 0) {
+    formatted += number;
+  }
+
+  return formatted.trim();
+}
+
 const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
+  const handleEmailBlur = () => {
+    const domain = getEmailDomain(formData.email || "");
+    if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
+      toast("Dica: prefira um e-mail corporativo (ex: nome@empresa.com) para agilizar o atendimento.");
+    }
+  };
+
+  const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatWhatsapp(e.target.value);
+    updateFormData("whatsapp", formatted);
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="space-y-3">
@@ -46,6 +117,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="nome@empresa.com"
             value={formData.email || ""}
             onChange={(e) => updateFormData("email", e.target.value)}
+            onBlur={handleEmailBlur}
             className="h-12"
           />
         </div>
@@ -58,9 +130,9 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
           <Input
             id="whatsapp"
             type="tel"
-            placeholder="+55 91 99999-9999"
+            placeholder="+55 11 9XXXX-XXXX"
             value={formData.whatsapp || ""}
-            onChange={(e) => updateFormData("whatsapp", e.target.value)}
+            onChange={handleWhatsappChange}
             className="h-12"
           />
         </div>

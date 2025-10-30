@@ -13,6 +13,42 @@ const STORAGE_KEY = "vanguardia-form-data";
 const TOTAL_STEPS = 3;
 const WEBHOOK_URL = "https://automation.infra.vanguardia.cloud/webhook/funil-icia";
 
+const VALID_DDDS = new Set([
+  "11","12","13","14","15","16","17","18","19",
+  "21","22","24","27","28",
+  "31","32","33","34","35","37","38",
+  "41","42","43","44","45","46","47","48","49",
+  "51","53","54","55",
+  "61","62","63","64","65","66","67","68","69",
+  "71","73","74","75","77","79",
+  "81","82","83","84","85","86","87","88","89",
+  "91","92","93","94","95","96","97","98","99"
+]);
+
+function onlyDigits(s: string) {
+  return String(s || "").replace(/\D/g, "");
+}
+
+function validateWhatsappNumber(value: string) {
+  const digits = onlyDigits(value);
+  const hasCountry = digits.startsWith("55");
+
+  // Comprimento esperado: 13 (55 + 2 DDD + 9 celular) ou 11 (2 DDD + 9 celular)
+  const expectedLen = hasCountry ? 13 : 11;
+  const lengthOk = digits.length === expectedLen;
+
+  // Extrair DDD
+  let ddd = "";
+  if (hasCountry && digits.length >= 4) {
+    ddd = digits.slice(2, 4);
+  } else if (!hasCountry && digits.length >= 2) {
+    ddd = digits.slice(0, 2);
+  }
+
+  const dddOk = VALID_DDDS.has(ddd);
+  return { lengthOk, dddOk };
+}
+
 const RaioXForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -95,6 +131,18 @@ const RaioXForm = () => {
         if (!formData.whatsapp?.trim()) {
           toast.error("Por favor, preencha seu WhatsApp");
           return false;
+        }
+        // Validação de WhatsApp com DDD
+        {
+          const { lengthOk, dddOk } = validateWhatsappNumber(formData.whatsapp);
+          if (!lengthOk) {
+            toast.error("Por favor, informe um WhatsApp válido com DDD (ex: +55 11 9XXXX-XXXX)");
+            return false;
+          }
+          if (!dddOk) {
+            toast.error("DDD inválido. Verifique e tente novamente.");
+            return false;
+          }
         }
         if (!formData.lgpdConsent) {
           toast.error("Por favor, aceite os termos de uso de dados");
