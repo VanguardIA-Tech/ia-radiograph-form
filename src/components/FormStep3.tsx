@@ -3,6 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Phone, User } from "lucide-react";
 import { toast } from "sonner";
+import { useRef } from "react";
+import type { ChangeEvent } from "react";
 
 interface FormStep3Props {
   formData: any;
@@ -67,7 +69,31 @@ function formatWhatsapp(value: string) {
   return formatted.trim();
 }
 
+function caretIndexForNthDigit(formatted: string, n: number) {
+  // n = quantidade de dígitos à esquerda do cursor
+  if (n <= 0) {
+    for (let i = 0; i < formatted.length; i++) {
+      if (/\d/.test(formatted[i])) return i;
+    }
+    return 0;
+  }
+  let count = 0;
+  for (let i = 0; i < formatted.length; i++) {
+    if (/\d/.test(formatted[i])) {
+      count++;
+      if (count === n) {
+        // cursor após o n-ésimo dígito
+        return i + 1;
+      }
+    }
+  }
+  // Se n exceder a quantidade de dígitos, vai para o fim
+  return formatted.length;
+}
+
 const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
+  const whatsappInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleEmailBlur = () => {
     const domain = getEmailDomain(formData.email || "");
     if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
@@ -75,9 +101,34 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
     }
   };
 
-  const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatWhatsapp(e.target.value);
+  const handleWhatsappChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputEl = e.target;
+    const rawValue = inputEl.value;
+    const selectionStart = inputEl.selectionStart ?? rawValue.length;
+
+    // Quantos dígitos existem à esquerda do cursor no valor digitado
+    const digitsLeftOfCursor = rawValue.slice(0, selectionStart).replace(/\D/g, "").length;
+
+    // Formatar o valor
+    const formatted = formatWhatsapp(rawValue);
+
+    // Atualizar estado controlado
     updateFormData("whatsapp", formatted);
+
+    // Reposicionar o cursor após o re-render
+    requestAnimationFrame(() => {
+      const el = whatsappInputRef.current;
+      if (!el) return;
+
+      const totalDigits = formatted.replace(/\D/g, "").length;
+      const n = Math.min(digitsLeftOfCursor, totalDigits);
+      const newCaret = caretIndexForNthDigit(formatted, n);
+      try {
+        el.setSelectionRange(newCaret, newCaret);
+      } catch {
+        // Em alguns browsers móveis pode falhar; silenciosamente ignorar
+      }
+    });
   };
 
   return (
@@ -133,6 +184,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="+55 11 9XXXX-XXXX"
             value={formData.whatsapp || ""}
             onChange={handleWhatsappChange}
+            ref={whatsappInputRef}
             className="h-12"
           />
         </div>
