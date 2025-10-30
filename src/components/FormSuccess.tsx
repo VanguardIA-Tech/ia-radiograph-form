@@ -45,13 +45,13 @@ const FormSuccess = () => {
           em um plano real de integração com IA na sua empresa.
         </p>
 
-        <div className="pt-2">
+        <div className="pt-2 flex justify-center">
           <Button
             size="lg"
             onClick={handleCalendly}
             className="h-12 px-6 bg-gradient-primary hover:opacity-90 text-white font-semibold w-full sm:w-auto"
           >
-            Agendar Diagnóstico Completo (gratuito) → Calendly
+            Agendar Diagnóstico Completo (gratuito)
           </Button>
         </div>
       </section>
