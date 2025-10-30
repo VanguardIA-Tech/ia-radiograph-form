@@ -9,11 +9,6 @@ const FormSuccess = () => {
     window.open("https://wa.me/5591999999999", "_blank", "noopener,noreferrer");
   };
 
-  const handleCalendly = () => {
-    const url = calendlyUrl || "https://calendly.com/";
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
       {/* HERO / CONFIRMAÇÃO */}
@@ -48,7 +43,7 @@ const FormSuccess = () => {
         <div className="pt-2 flex justify-center">
           <Button
             size="lg"
-            onClick={handleCalendly}
+            onClick={handleCTA}
             className="h-12 px-6 bg-gradient-primary hover:opacity-90 text-white font-semibold w-full sm:w-auto"
           >
             Agendar Diagnóstico Completo (gratuito)
