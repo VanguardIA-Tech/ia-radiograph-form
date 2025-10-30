@@ -8,6 +8,7 @@ import FormStep1 from "./FormStep1";
 import FormStep2 from "./FormStep2";
 import FormStep3 from "./FormStep3";
 import FormSuccess from "./FormSuccess";
+import { useNavigate } from "react-router-dom";
 
 const STORAGE_KEY = "vanguardia-form-data";
 const TOTAL_STEPS = 3;
@@ -53,6 +54,7 @@ const RaioXForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<any>({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -207,6 +209,7 @@ const RaioXForm = () => {
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
       toast.success("Raio-X gerado com sucesso!");
+      navigate("/obrigado");
     } catch (error) {
       toast.error("Erro ao enviar formulário. Tente novamente.");
       console.error("Submit error:", error);
@@ -237,10 +240,7 @@ const RaioXForm = () => {
     }
   };
 
-  // FULL-SCREEN LAYOUT:
-  // - Root section occupies full viewport (100vw x 100vh).
-  // - The "card" fills the viewport with no outer padding; internal content scrolls.
-  // - Action bar (buttons) is fixed to the bottom of the card.
+  // Mantemos o fallback local, mas normalmente navegaremos para /obrigado
   if (isSubmitted) {
     return (
       <section className="min-h-screen min-w-screen w-screen h-screen bg-background">
