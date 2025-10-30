@@ -11,6 +11,7 @@ import FormSuccess from "./FormSuccess";
 
 const STORAGE_KEY = "vanguardia-form-data";
 const TOTAL_STEPS = 3;
+const WEBHOOK_URL = "https://automation.infra.vanguardia.cloud/webhook/funil-icia";
 
 const RaioXForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -128,8 +129,33 @@ const RaioXForm = () => {
     }
 
     try {
+      // Prepare payload (add timestamp)
+      const payload = {
+        ...formData,
+        submittedAt: new Date().toISOString(),
+      };
+
+      // Send form data as JSON to the webhook
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        console.error("Webhook responded with error:", res.status, text);
+        toast.error("Erro ao enviar dados para o servidor. Tente novamente.");
+        return;
+      }
+
       console.log("Form submitted:", formData);
+
+      // small delay for UX
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
       toast.success("Raio-X gerado com sucesso!");
