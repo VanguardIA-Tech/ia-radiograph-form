@@ -43,16 +43,13 @@ function formatWhatsapp(value: string) {
   let rest = digits;
   let prefix = "";
 
-  // Mantém +55 se o usuário digitar (ou já tiver)
   if (rest.startsWith("55")) {
     prefix = "+55 ";
     rest = rest.slice(2);
   } else if (raw.trim().startsWith("+")) {
-    // Usuário começou com "+", mas não digitou 55 ainda
     prefix = "+";
   }
 
-  // Limitar a 2 (DDD) + 9 dígitos do celular
   const ddd = rest.slice(0, 2);
   const number = rest.slice(2, 11);
 
@@ -70,7 +67,6 @@ function formatWhatsapp(value: string) {
 }
 
 function caretIndexForNthDigit(formatted: string, n: number) {
-  // n = quantidade de dígitos à esquerda do cursor
   if (n <= 0) {
     for (let i = 0; i < formatted.length; i++) {
       if (/\d/.test(formatted[i])) return i;
@@ -82,12 +78,10 @@ function caretIndexForNthDigit(formatted: string, n: number) {
     if (/\d/.test(formatted[i])) {
       count++;
       if (count === n) {
-        // cursor após o n-ésimo dígito
         return i + 1;
       }
     }
   }
-  // Se n exceder a quantidade de dígitos, vai para o fim
   return formatted.length;
 }
 
@@ -106,16 +100,12 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
     const rawValue = inputEl.value;
     const selectionStart = inputEl.selectionStart ?? rawValue.length;
 
-    // Quantos dígitos existem à esquerda do cursor no valor digitado
     const digitsLeftOfCursor = rawValue.slice(0, selectionStart).replace(/\D/g, "").length;
 
-    // Formatar o valor
     const formatted = formatWhatsapp(rawValue);
 
-    // Atualizar estado controlado
     updateFormData("whatsapp", formatted);
 
-    // Reposicionar o cursor após o re-render
     requestAnimationFrame(() => {
       const el = whatsappInputRef.current;
       if (!el) return;
@@ -126,7 +116,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
       try {
         el.setSelectionRange(newCaret, newCaret);
       } catch {
-        // Em alguns browsers móveis pode falhar; silenciosamente ignorar
       }
     });
   };
@@ -200,16 +189,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             Autorizo o uso dos dados para geração do meu Raio-X personalizado e contato consultivo. *
           </label>
         </div>
-      </div>
-
-      <div className="bg-gradient-primary p-6 rounded-xl text-white space-y-3">
-        <h3 className="font-bold text-lg">Raio-X de Eficiência com IA</h3>
-        <p className="text-sm text-white/90">
-          Gratuito e personalizado. Em 5 minutos, no seu WhatsApp e e-mail.
-        </p>
-        <p className="text-sm text-white/90">
-          Descubra de uma vez o que é possível com IA, para a SUA realidade empresarial.
-        </p>
       </div>
     </div>
   );
