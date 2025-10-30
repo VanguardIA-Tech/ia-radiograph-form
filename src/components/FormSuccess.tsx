@@ -151,7 +151,7 @@ const FormSuccess = () => {
             </a>
           </div>
 
-          <p className="text-xs text-muted-foreground mt-1">© 2026 Grupo VanguardIA</p>
+          <p className="text-xs text-muted-foreground mt-1">© 2025 Grupo VanguardIA</p>
         </div>
       </footer>
     </div>
