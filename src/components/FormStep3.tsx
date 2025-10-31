@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Phone, User } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import type { ChangeEvent } from "react";
 
 interface FormStep3Props {
@@ -85,15 +85,49 @@ function caretIndexForNthDigit(formatted: string, n: number) {
   return formatted.length;
 }
 
+const EMAIL_DEBOUNCE_MS = 800;
+
 const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
   const whatsappInputRef = useRef<HTMLInputElement | null>(null);
+  const debounceRef = useRef<number | null>(null);
+  const lastShownDomainRef = useRef<string | null>(null);
 
-  const handleEmailBlur = () => {
-    const domain = getEmailDomain(formData.email || "");
-    if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
-      toast("Dica: prefira um e-mail corporativo (ex: nome@empresa.com) para agilizar o atendimento.");
+  useEffect(() => {
+    // Clear previous timer
+    if (debounceRef.current) {
+      window.clearTimeout(debounceRef.current);
+      debounceRef.current = null;
     }
-  };
+
+    const email = String(formData.email || "").trim();
+    if (!email || !email.includes("@")) {
+      // reset last shown when email cleared or invalid
+      lastShownDomainRef.current = null;
+      return;
+    }
+
+    // debounce: show hint only after user stops typing
+    debounceRef.current = window.setTimeout(() => {
+      const domain = getEmailDomain(email);
+      if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
+        // Avoid repeating same toast for the same domain
+        if (lastShownDomainRef.current !== domain) {
+          toast("Dica: prefira um e-mail corporativo (ex: nome@empresa.com) para agilizar o atendimento.");
+          lastShownDomainRef.current = domain;
+        }
+      } else {
+        lastShownDomainRef.current = null;
+      }
+      debounceRef.current = null;
+    }, EMAIL_DEBOUNCE_MS);
+
+    return () => {
+      if (debounceRef.current) {
+        window.clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+    };
+  }, [formData.email]);
 
   const handleWhatsappChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputEl = e.target;
@@ -157,7 +191,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="nome@empresa.com"
             value={formData.email || ""}
             onChange={(e) => updateFormData("email", e.target.value)}
-            onBlur={handleEmailBlur}
             className="h-12"
           />
         </div>
