@@ -263,24 +263,28 @@ const RaioXForm = () => {
               <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
             </div>
 
-            {/* Layout com coluna lateral: destaque à direita em desktop, sticky no topo em mobile */}
-            <div className="mt-8 grid gap-6 lg:grid-cols-12 items-start">
-              {/* Coluna destaque (aparece primeiro no mobile) */}
-              <div className="order-1 lg:order-2 lg:col-span-4">
-                <HighlightBox />
-              </div>
+            {/* Colocar o destaque logo acima dos campos do formulário */}
+            <div className="mt-8">
+              <div className="max-w-6xl mx-auto grid gap-6 lg:grid-cols-12 items-start">
+                {/* Conteúdo principal: destaque + formulário (destaque fica ACIMA dos campos) */}
+                <div className="lg:col-span-12">
+                  <div className="mb-6">
+                    {/* Mantém comportamento sticky do HighlightBox relativo ao scroll container */}
+                    <HighlightBox />
+                  </div>
 
-              {/* Conteúdo do formulário (principal) */}
-              <div className="order-2 lg:order-1 lg:col-span-8 min-h-[60vh]">
-                {currentStep === 1 && (
-                  <FormStep1 formData={formData} updateFormData={updateFormData} />
-                )}
-                {currentStep === 2 && (
-                  <FormStep2 formData={formData} updateFormData={updateFormData} />
-                )}
-                {currentStep === 3 && (
-                  <FormStep3 formData={formData} updateFormData={updateFormData} />
-                )}
+                  <div className="min-h-[60vh]">
+                    {currentStep === 1 && (
+                      <FormStep1 formData={formData} updateFormData={updateFormData} />
+                    )}
+                    {currentStep === 2 && (
+                      <FormStep2 formData={formData} updateFormData={updateFormData} />
+                    )}
+                    {currentStep === 3 && (
+                      <FormStep3 formData={formData} updateFormData={updateFormData} />
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
