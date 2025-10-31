@@ -112,9 +112,12 @@ All colors MUST be HSL.
   textarea:-webkit-autofill:focus,
   select:-webkit-autofill:focus {
     -webkit-text-fill-color: hsl(var(--foreground)) !important;
+    /* Keep the inset box-shadow so browser autofill paints the element background,
+       but preserve both background layers by ensuring background-clip includes border-box. */
     -webkit-box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
     box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
-    background-clip: padding-box !important;
+    /* Preserve both layers used for gradient border + inner background */
+    background-clip: padding-box, border-box !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }
 
