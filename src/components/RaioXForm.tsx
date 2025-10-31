@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/sonner";
 import FormHeader from "./FormHeader";
 import FormProgress from "./FormProgress";
 import FormStep1 from "./FormStep1";

@@ -1,27 +1,68 @@
-import { useTheme } from "next-themes";
-import { Toaster as Sonner, toast } from "sonner";
+"use client";
 
-type ToasterProps = React.ComponentProps<typeof Sonner>;
+import React from "react";
+import { Toaster as SonnerToaster, toast as sonnerToast } from "sonner";
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+/**
+ * Color tokens (kept as hex for predictable rendering across browsers)
+ * - Aviso: amarelo claro de fundo + texto escuro
+ * - Erro: vermelho + texto branco
+ */
+const WARN_BG = "#FEF3C7"; // amber-100
+const WARN_COLOR = "#92400E"; // amber-700 (legível sobre o amarelo)
+const ERROR_BG = "#EF4444"; // red-500
+const ERROR_COLOR = "#FFFFFF"; // white
 
-  return (
-    <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="toaster group"
-      toastOptions={{
-        classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          description: "group-[.toast]:text-muted-foreground",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
-        },
-      }}
-      {...props}
-    />
-  );
+/**
+ * Create a wrapper around sonner's toast function so we can force styles
+ * for default (used as "aviso") and error toasts.
+ *
+ * We preserve other helper methods (success, loading, dismiss, update, etc.)
+ * by copying them from the original sonner toast.
+ */
+function createWrappedToast() {
+  // base function (default toast / aviso)
+  const wrapped: any = (message: any, options?: any) => {
+    return sonnerToast(message, {
+      ...options,
+      style: {
+        // allow override by caller but default to warning palette
+        background: WARN_BG,
+        color: WARN_COLOR,
+        ...(options?.style ?? {}),
+      },
+    });
+  };
+
+  // keep existing helpers but override error and keep others intact
+  wrapped.error = (message: any, options?: any) =>
+    sonnerToast.error(message, {
+      ...options,
+      style: {
+        background: ERROR_BG,
+        color: ERROR_COLOR,
+        ...(options?.style ?? {}),
+      },
+    });
+
+  // keep success and other methods unmodified
+  wrapped.success = (...args: any[]) => (sonnerToast as any).success(...args);
+  wrapped.loading = (...args: any[]) => (sonnerToast as any).loading(...args);
+  wrapped.dismiss = (...args: any[]) => (sonnerToast as any).dismiss(...args);
+  wrapped.update = (...args: any[]) => (sonnerToast as any).update(...args);
+  wrapped.promise = (...args: any[]) => (sonnerToast as any).promise(...args);
+
+  return wrapped;
+}
+
+export const toast = createWrappedToast();
+
+/**
+ * Re-export the Toaster so the app keeps rendering the Sonner Toaster component
+ * from the same path (used in App.tsx).
+ */
+export const Toaster = (props: React.ComponentProps<typeof SonnerToaster>) => {
+  return <SonnerToaster {...props} />;
 };
 
-export { Toaster, toast };
+export default Toaster;
