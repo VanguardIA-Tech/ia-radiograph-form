@@ -1,3 +1,12 @@
+` to include the complete file content, making sure to leave the import statements as they are and only edit the CSS.
+
+After I implement the changes, I’ll summarize what was done in a very concise, non-technical sentence. Additionally, I’ll include a `<dyad-chat-summary>` with exactly one chat title at the end. The focus will be strictly on editing `src/index.css`. Let’s get that updated!**Adding autofill styles**
+
+I’m planning to enhance the autofill styles for both `input:-webkit-autofill` and `focus` by adding a solid border of `1px solid hsl(var(--primary)) !important;`. While a blue gradient is ideal, a solid blue is acceptable, based on a variable value of "214 100% 31%." 
+
+I’ll also make sure to adjust for `-moz` in the autofill selector and retain the background-clip for the `input`, `textarea`, and `select` elements. Before I make the edits using `<dyad-write>`, I’ll include a brief explanation, followed by a summary sentence and a `<dyad-chat-summary>`. Let’s get this ready!</think>Certo — vou forçar uma borda sólida quando o navegador aplicar autofill, garantindo que a borda azul apareça mesmo com o estilo de preenchimento automático. Vou atualizar as regras de autofill para definir explicitamente border: 1px solid hsl(var(--primary)) !important; além de manter o preenchimento interno via box-shadow.
+
+<dyad-write path="src/index.css" description="Ajuste nas regras de autofill para aplicar uma borda sólida azul durante o preenchimento automático e preservar o fundo interno.">
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -103,6 +112,7 @@ All colors MUST be HSL.
    - ensure text color matches --foreground
    - keep transition hack to avoid the yellow flash in Chrome
    - support WebKit and Firefox pseudo-classes
+   - when autofill is active, show a solid primary border to guarantee visibility
 */
 @layer base {
   input:-webkit-autofill,
@@ -112,13 +122,17 @@ All colors MUST be HSL.
   textarea:-webkit-autofill:focus,
   select:-webkit-autofill:focus {
     -webkit-text-fill-color: hsl(var(--foreground)) !important;
-    /* Keep the inset box-shadow so browser autofill paints the element background,
-       but preserve both background layers by ensuring background-clip includes border-box. */
+    /* Preserve the inner filled background */
     -webkit-box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
     box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
-    /* Preserve both layers used for gradient border + inner background */
+    /* Ensure both background layers are preserved for our gradient-border approach */
     background-clip: padding-box, border-box !important;
     transition: background-color 5000s ease-in-out 0s !important;
+
+    /* Force a visible solid border during autofill so the input keeps a clear outline */
+    border: 1px solid hsl(var(--primary)) !important;
+    /* Remove any browser-applied outer focus ring that might cover the border */
+    outline: none !important;
   }
 
   /* Chrome shows a different color for the first line in some cases */
@@ -131,12 +145,17 @@ All colors MUST be HSL.
   input:-moz-autofill,
   textarea:-moz-autofill,
   select:-moz-autofill {
+    /* Preserve inner background */
     box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
     -moz-text-fill-color: hsl(var(--foreground)) !important;
+
+    /* Force visible solid border in Firefox when autofill applies */
+    border: 1px solid hsl(var(--primary)) !important;
+    outline: none !important;
   }
 
   /* If inputs have an inline gradient border via background-image + border transparent,
-     ensure autofill doesn't override background-clip behavior. */
+     ensure autofill doesn't override background-clip behavior. Keep background-clip default. */
   input,
   textarea,
   select,
