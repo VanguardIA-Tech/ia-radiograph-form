@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/sonner";
 import FormHeader from "./FormHeader";
 import FormProgress from "./FormProgress";
 import FormStep1 from "./FormStep1";
@@ -9,6 +9,7 @@ import FormStep2 from "./FormStep2";
 import FormStep3 from "./FormStep3";
 import FormSuccess from "./FormSuccess";
 import { useNavigate } from "react-router-dom";
+import HighlightBox from "./HighlightBox";
 
 const STORAGE_KEY = "vanguardia-form-data";
 const TOTAL_STEPS = 3;
@@ -134,7 +135,6 @@ const RaioXForm = () => {
           toast.error("Por favor, preencha seu WhatsApp");
           return false;
         }
-        // Validação de WhatsApp com DDD
         {
           const { lengthOk, dddOk } = validateWhatsappNumber(formData.whatsapp);
           if (!lengthOk) {
@@ -179,13 +179,11 @@ const RaioXForm = () => {
     }
 
     try {
-      // Prepare payload (add timestamp)
       const payload = {
         ...formData,
         submittedAt: new Date().toISOString(),
       };
 
-      // Send form data as JSON to the webhook
       const res = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -203,7 +201,6 @@ const RaioXForm = () => {
 
       console.log("Form submitted:", formData);
 
-      // small delay for UX
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       localStorage.removeItem(STORAGE_KEY);
@@ -240,7 +237,6 @@ const RaioXForm = () => {
     }
   };
 
-  // Mantemos o fallback local, mas normalmente navegaremos para /obrigado
   if (isSubmitted) {
     return (
       <section className="min-h-screen min-w-screen w-screen h-screen bg-background">
@@ -258,7 +254,7 @@ const RaioXForm = () => {
   return (
     <section className="min-h-screen min-w-screen w-screen h-screen bg-background">
       <div className="h-full w-full bg-card border border-border flex flex-col">
-        {/* Scrollable content area */}
+        {/* Área de conteúdo rolável */}
         <div className="flex-1 overflow-y-auto px-6 py-8 md:px-12 md:py-12 lg:px-20">
           <div className="max-w-6xl mx-auto">
             <FormHeader />
@@ -267,21 +263,34 @@ const RaioXForm = () => {
               <FormProgress currentStep={currentStep} totalSteps={TOTAL_STEPS} />
             </div>
 
-            <div className="mt-8 min-h-[60vh]">
-              {currentStep === 1 && (
-                <FormStep1 formData={formData} updateFormData={updateFormData} />
-              )}
-              {currentStep === 2 && (
-                <FormStep2 formData={formData} updateFormData={updateFormData} />
-              )}
-              {currentStep === 3 && (
-                <FormStep3 formData={formData} updateFormData={updateFormData} />
-              )}
+            {/* Colocar o destaque logo acima dos campos do formulário */}
+            <div className="mt-8">
+              <div className="max-w-6xl mx-auto grid gap-6 lg:grid-cols-12 items-start">
+                {/* Conteúdo principal: destaque + formulário (destaque fica ACIMA dos campos) */}
+                <div className="lg:col-span-12">
+                  <div className="mb-6">
+                    {/* Mantém comportamento sticky do HighlightBox relativo ao scroll container */}
+                    <HighlightBox />
+                  </div>
+
+                  <div className="min-h-[60vh]">
+                    {currentStep === 1 && (
+                      <FormStep1 formData={formData} updateFormData={updateFormData} />
+                    )}
+                    {currentStep === 2 && (
+                      <FormStep2 formData={formData} updateFormData={updateFormData} />
+                    )}
+                    {currentStep === 3 && (
+                      <FormStep3 formData={formData} updateFormData={updateFormData} />
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Action bar fixed to bottom of the card */}
+        {/* Barra de ações fixa ao rodapé do card */}
         <div className="w-full border-t border-border bg-card px-6 py-4 md:px-12 lg:px-20">
           <div className="max-w-6xl mx-auto flex gap-4">
             {currentStep > 1 && (

@@ -2,8 +2,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Mail, Phone, User } from "lucide-react";
-import { toast } from "sonner";
-import { useRef } from "react";
+import { toast } from "@/components/ui/sonner";
+import { useRef, useEffect } from "react";
 import type { ChangeEvent } from "react";
 
 interface FormStep3Props {
@@ -43,16 +43,13 @@ function formatWhatsapp(value: string) {
   let rest = digits;
   let prefix = "";
 
-  // Mantém +55 se o usuário digitar (ou já tiver)
   if (rest.startsWith("55")) {
     prefix = "+55 ";
     rest = rest.slice(2);
   } else if (raw.trim().startsWith("+")) {
-    // Usuário começou com "+", mas não digitou 55 ainda
     prefix = "+";
   }
 
-  // Limitar a 2 (DDD) + 9 dígitos do celular
   const ddd = rest.slice(0, 2);
   const number = rest.slice(2, 11);
 
@@ -70,7 +67,6 @@ function formatWhatsapp(value: string) {
 }
 
 function caretIndexForNthDigit(formatted: string, n: number) {
-  // n = quantidade de dígitos à esquerda do cursor
   if (n <= 0) {
     for (let i = 0; i < formatted.length; i++) {
       if (/\d/.test(formatted[i])) return i;
@@ -82,40 +78,68 @@ function caretIndexForNthDigit(formatted: string, n: number) {
     if (/\d/.test(formatted[i])) {
       count++;
       if (count === n) {
-        // cursor após o n-ésimo dígito
         return i + 1;
       }
     }
   }
-  // Se n exceder a quantidade de dígitos, vai para o fim
   return formatted.length;
 }
 
+const EMAIL_DEBOUNCE_MS = 800;
+
 const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
   const whatsappInputRef = useRef<HTMLInputElement | null>(null);
+  const debounceRef = useRef<number | null>(null);
+  const lastShownDomainRef = useRef<string | null>(null);
 
-  const handleEmailBlur = () => {
-    const domain = getEmailDomain(formData.email || "");
-    if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
-      toast("Dica: prefira um e-mail corporativo (ex: nome@empresa.com) para agilizar o atendimento.");
+  useEffect(() => {
+    // Clear previous timer
+    if (debounceRef.current) {
+      window.clearTimeout(debounceRef.current);
+      debounceRef.current = null;
     }
-  };
+
+    const email = String(formData.email || "").trim();
+    if (!email || !email.includes("@")) {
+      // reset last shown when email cleared or invalid
+      lastShownDomainRef.current = null;
+      return;
+    }
+
+    // debounce: show hint only after user stops typing
+    debounceRef.current = window.setTimeout(() => {
+      const domain = getEmailDomain(email);
+      if (domain && FREE_EMAIL_DOMAINS.has(domain)) {
+        // Avoid repeating same toast for the same domain
+        if (lastShownDomainRef.current !== domain) {
+          toast("Dica: prefira um e-mail corporativo (ex: nome@empresa.com) para agilizar o atendimento.");
+          lastShownDomainRef.current = domain;
+        }
+      } else {
+        lastShownDomainRef.current = null;
+      }
+      debounceRef.current = null;
+    }, EMAIL_DEBOUNCE_MS);
+
+    return () => {
+      if (debounceRef.current) {
+        window.clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+    };
+  }, [formData.email]);
 
   const handleWhatsappChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputEl = e.target;
     const rawValue = inputEl.value;
     const selectionStart = inputEl.selectionStart ?? rawValue.length;
 
-    // Quantos dígitos existem à esquerda do cursor no valor digitado
     const digitsLeftOfCursor = rawValue.slice(0, selectionStart).replace(/\D/g, "").length;
 
-    // Formatar o valor
     const formatted = formatWhatsapp(rawValue);
 
-    // Atualizar estado controlado
     updateFormData("whatsapp", formatted);
 
-    // Reposicionar o cursor após o re-render
     requestAnimationFrame(() => {
       const el = whatsappInputRef.current;
       if (!el) return;
@@ -126,7 +150,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
       try {
         el.setSelectionRange(newCaret, newCaret);
       } catch {
-        // Em alguns browsers móveis pode falhar; silenciosamente ignorar
       }
     });
   };
@@ -168,7 +191,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="nome@empresa.com"
             value={formData.email || ""}
             onChange={(e) => updateFormData("email", e.target.value)}
-            onBlur={handleEmailBlur}
             className="h-12"
           />
         </div>
@@ -200,16 +222,6 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             Autorizo o uso dos dados para geração do meu Raio-X personalizado e contato consultivo. *
           </label>
         </div>
-      </div>
-
-      <div className="bg-gradient-primary p-6 rounded-xl text-white space-y-3">
-        <h3 className="font-bold text-lg">Raio-X de Eficiência com IA</h3>
-        <p className="text-sm text-white/90">
-          Gratuito e personalizado. Em 5 minutos, no seu WhatsApp e e-mail.
-        </p>
-        <p className="text-sm text-white/90">
-          Descubra de uma vez o que é possível com IA, para a SUA realidade empresarial.
-        </p>
       </div>
     </div>
   );
