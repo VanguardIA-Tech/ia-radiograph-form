@@ -156,7 +156,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="space-y-3 text-center">
+      <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
           Pra onde enviamos seu Raio-X?
         </h2>

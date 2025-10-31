@@ -11,7 +11,7 @@ interface FormStep1Props {
 const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="space-y-3 text-center">
+      <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
           Comece seu Raio-X de Eficiência com IA
         </h2>
