@@ -99,25 +99,36 @@ All colors MUST be HSL.
 }
 
 /* Autofill fixes: ensure browser autofill doesn't break our theme.
-   - force inner background to --card
-   - ensure text color matches --foreground
-   - keep transition hack to avoid the yellow flash in Chrome
-   - support WebKit and Firefox pseudo-classes
+   - use inset box-shadow to preserve inner background (card)
+   - use an outer box-shadow to draw a solid primary border during autofill (robust vs background-image)
+   - cover WebKit and Firefox variations and hover/focus states
 */
 @layer base {
+  /*
+    WebKit-based browsers (Chrome, Edge, Safari) plus some internal variants.
+    We use two shadows:
+      1) outer shadow to simulate a solid 1px border in --primary
+      2) inset large shadow to set the interior background to --card
+  */
   input:-webkit-autofill,
   textarea:-webkit-autofill,
   select:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  textarea:-webkit-autofill:hover,
+  select:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   textarea:-webkit-autofill:focus,
-  select:-webkit-autofill:focus {
+  select:-webkit-autofill:focus,
+  input:-internal-autofill-selected,
+  textarea:-internal-autofill-selected,
+  select:-internal-autofill-selected {
     -webkit-text-fill-color: hsl(var(--foreground)) !important;
-    /* Keep the inset box-shadow so browser autofill paints the element background,
-       but preserve both background layers by ensuring background-clip includes border-box. */
-    -webkit-box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
-    box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
-    /* Preserve both layers used for gradient border + inner background */
+    /* Outer 1px border (solid primary) + inset fill for the card background */
+    box-shadow: 0 0 0 1px hsl(var(--primary)) !important, 0 0 0 1000px hsl(var(--card)) inset !important;
+    /* Remove any background-image gradients that would interfere */
+    background-image: none !important;
     background-clip: padding-box, border-box !important;
+    border: 1px solid transparent !important; /* keep layout stable */
     transition: background-color 5000s ease-in-out 0s !important;
   }
 
@@ -127,20 +138,56 @@ All colors MUST be HSL.
     color: hsl(var(--foreground)) !important;
   }
 
-  /* Firefox autofill pseudo-class */
+  /*
+    Firefox autofill pseudo-class
+    We'll set the same approach: inset fill + outer border via box-shadow
+  */
   input:-moz-autofill,
   textarea:-moz-autofill,
   select:-moz-autofill {
-    box-shadow: 0 0 0px 1000px hsl(var(--card)) inset !important;
     -moz-text-fill-color: hsl(var(--foreground)) !important;
+    box-shadow: 0 0 0 1px hsl(var(--primary)) !important, 0 0 0 1000px hsl(var(--card)) inset !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
   }
 
-  /* If inputs have an inline gradient border via background-image + border transparent,
-     ensure autofill doesn't override background-clip behavior. */
+  /* Ensure general elements keep both background layers when not autofilled */
   input,
   textarea,
   select,
   button {
     background-clip: padding-box, border-box;
+  }
+}
+
+/* Autofill can still be applied after page load; if you want to ensure the outer border is visible while the field remains focused,
+   keep the focus-visible (keyboard) style consistent. */
+@layer base {
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--ring) / 0.12);
+  }
+}
+
+/* Autofill: fallback for any remaining vendor pseudo-classes some browsers expose */
+@layer base {
+  /* Some WebKit builds expose ::-webkit-autofill and others use :-webkit-autofill; include both */
+  input::-webkit-autofill,
+  textarea::-webkit-autofill,
+  select::-webkit-autofill {
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+    box-shadow: 0 0 0 1px hsl(var(--primary)) !important, 0 0 0 1000px hsl(var(--card)) inset !important;
+    background-image: none !important;
+    background-clip: padding-box, border-box !important;
+  }
+}
+
+/* Autofill-first-line fallback (Chrome variants) */
+@layer base {
+  input::-webkit-autofill::first-line,
+  textarea::-webkit-autofill::first-line {
+    color: hsl(var(--foreground)) !important;
   }
 }
