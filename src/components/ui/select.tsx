@@ -35,7 +35,38 @@ export const SelectTrigger = React.forwardRef<
 SelectTrigger.displayName = "SelectTrigger";
 
 export const SelectValue = SelectPrimitive.Value;
-export const SelectContent = SelectPrimitive.Content;
+
+/**
+ * Styled SelectContent
+ * - ensures the dropdown has a solid background (bg-card), border, rounded corners and shadow
+ * - places items inside a viewport for proper scroll behaviour
+ */
+export const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({ className, children, ...props }, ref) => {
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
+        {...props}
+        className={cn(
+          "z-50 overflow-hidden rounded-md border border-border bg-card shadow-medium",
+          "min-w-[220px] text-foreground",
+          className
+        )}
+      >
+        <SelectPrimitive.Viewport className="p-1">{children}</SelectPrimitive.Viewport>
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  );
+});
+SelectContent.displayName = "SelectContent";
+
+/**
+ * Styled SelectItem
+ * - gives each item padding, hover and focus styles and a clear selected state
+ */
 export const SelectItem = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
@@ -44,9 +75,15 @@ export const SelectItem = React.forwardRef<
     <SelectPrimitive.Item
       ref={ref}
       {...props}
-      className={cn("select-item px-2 py-2 text-sm cursor-pointer", className)}
+      className={cn(
+        "relative flex w-full cursor-default select-none items-center rounded-md px-2 py-2 text-sm outline-none",
+        "data-[highlighted]:bg-secondary/70 data-[highlighted]:text-foreground",
+        "data-[disabled]:opacity-50 data-[disabled]:pointer-events-none",
+        className
+      )}
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemIndicator className="absolute right-2 inline-flex items-center" />
     </SelectPrimitive.Item>
   );
 });
