@@ -31,7 +31,7 @@ const FormSuccess = () => {
       </section>
 
       {/* BLOCO 2 — CHAMADA PARA AÇÃO HUMANA */}
-      <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-4">
+      <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-4 text-center md:text-left">
         <h3 className="text-xl md:text-2xl font-bold text-foreground">
           A próxima etapa é conversar com um dos nossos consultores sêniores de Eficiência com IA, para empresas com mais de 30 colaboradores.
         </h3>
@@ -86,7 +86,7 @@ const FormSuccess = () => {
 
       {/* BLOCO 4 — EXCLUSIVIDADE / URGÊNCIA + CTA */}
       <section className="space-y-5">
-        <div className="rounded-xl border border-border p-6 md:p-8 bg-card">
+        <div className="rounded-xl border border-border p-6 md:p-8 bg-card text-center md:text-left">
           <p className="text-sm md:text-base text-foreground">
             Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 empresas selecionadas para integração corporativa de IA no Brasil.
           </p>

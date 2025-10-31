@@ -155,7 +155,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 text-center md:text-left">
       <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
           Pra onde enviamos seu Raio-X?
@@ -167,7 +167,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="fullName" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="fullName" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <User className="w-4 h-4 text-primary" />
             Nome completo *
           </Label>
@@ -176,12 +176,12 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="Digite seu nome completo"
             value={formData.fullName || ""}
             onChange={(e) => updateFormData("fullName", e.target.value)}
-            className="h-12"
+            className="h-12 text-center md:text-left"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <Mail className="w-4 h-4 text-primary" />
             E-mail corporativo *
           </Label>
@@ -191,12 +191,12 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             placeholder="nome@empresa.com"
             value={formData.email || ""}
             onChange={(e) => updateFormData("email", e.target.value)}
-            className="h-12"
+            className="h-12 text-center md:text-left"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="whatsapp" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="whatsapp" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <Phone className="w-4 h-4 text-primary" />
             WhatsApp (com DDD) *
           </Label>
@@ -207,7 +207,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             value={formData.whatsapp || ""}
             onChange={handleWhatsappChange}
             ref={whatsappInputRef}
-            className="h-12"
+            className="h-12 text-center md:text-left"
           />
         </div>
 
@@ -218,7 +218,7 @@ const FormStep3 = ({ formData, updateFormData }: FormStep3Props) => {
             onCheckedChange={(checked) => updateFormData("lgpdConsent", checked)}
             className="mt-0.5"
           />
-          <label htmlFor="lgpd" className="text-sm cursor-pointer flex-1">
+          <label htmlFor="lgpd" className="text-sm cursor-pointer flex-1 text-left">
             Autorizo o uso dos dados para geração do meu Raio-X personalizado e contato consultivo. *
           </label>
         </div>

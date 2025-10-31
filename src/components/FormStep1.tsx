@@ -10,7 +10,7 @@ interface FormStep1Props {
 
 const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 text-center md:text-left">
       <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
           Comece seu Raio-X de Eficiência com IA
@@ -22,7 +22,7 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
 
       <div className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="company" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="company" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <Building2 className="w-4 h-4 text-primary" />
             Nome da empresa *
           </Label>
@@ -31,12 +31,12 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
             placeholder="Ex: Rede Mais Saúde"
             value={formData.company || ""}
             onChange={(e) => updateFormData("company", e.target.value)}
-            className="h-12"
+            className="h-12 text-center md:text-left"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="role" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="role" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <User className="w-4 h-4 text-primary" />
             Seu cargo/função *
           </Label>
@@ -55,7 +55,7 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="employees" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="employees" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <Users className="w-4 h-4 text-primary" />
             Número de colaboradores *
           </Label>
@@ -73,7 +73,7 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="sector" className="flex items-center gap-2 text-sm font-medium">
+          <Label htmlFor="sector" className="flex items-center gap-2 text-sm font-medium justify-center md:justify-start">
             <Briefcase className="w-4 h-4 text-primary" />
             Setor de atuação *
           </Label>

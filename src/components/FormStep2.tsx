@@ -56,7 +56,7 @@ const FormStep2 = ({ formData, updateFormData }: FormStep2Props) => {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="space-y-8 animate-in fade-in duration-500 text-center md:text-left">
       <div className="space-y-3">
         <h2 className="text-3xl font-bold text-foreground">
           Onde a IA pode gerar mais impacto para você?
@@ -106,7 +106,7 @@ const FormStep2 = ({ formData, updateFormData }: FormStep2Props) => {
                 <label
                   key={focus.value}
                   className={`
-                    flex items-start gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all duration-300
+                    flex items-start text-left gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all duration-300
                     ${isSelected 
                       ? 'border-primary bg-primary/5 shadow-soft' 
                       : 'border-border hover:border-primary/50 hover:bg-secondary'
@@ -157,7 +157,7 @@ const FormStep2 = ({ formData, updateFormData }: FormStep2Props) => {
             placeholder="Ex: demora em relatórios ou retrabalho entre áreas"
             value={formData.bottleneck || ""}
             onChange={(e) => updateFormData("bottleneck", e.target.value)}
-            className="min-h-[100px] resize-none"
+            className="min-h-[100px] resize-none text-center md:text-left"
           />
         </div>
       </div>
