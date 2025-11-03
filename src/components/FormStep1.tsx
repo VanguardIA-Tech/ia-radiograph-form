@@ -64,8 +64,8 @@ const FormStep1 = ({ formData, updateFormData }: FormStep1Props) => {
               <SelectValue placeholder="Selecione a faixa" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1-10">1 a 10</SelectItem>
-              <SelectItem value="11-50">11 a 50</SelectItem>
+              <SelectItem value="1-20">1 a 20</SelectItem>
+              <SelectItem value="21-50">21 a 50</SelectItem>
               <SelectItem value="51-200">51 a 200</SelectItem>
               <SelectItem value="200+">Mais de 200</SelectItem>
             </SelectContent>
