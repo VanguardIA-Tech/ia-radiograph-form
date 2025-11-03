@@ -10,6 +10,7 @@ import FormStep3 from "./FormStep3";
 import FormSuccess from "./FormSuccess";
 import { useNavigate } from "react-router-dom";
 import HighlightBox from "./HighlightBox";
+import { getUTMParams } from "@/lib/utm";
 
 const STORAGE_KEY = "vanguardia-form-data";
 const TOTAL_STEPS = 3;
@@ -55,6 +56,7 @@ const RaioXForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<any>({});
+  const [utmParams, setUtmParams] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,6 +68,7 @@ const RaioXForm = () => {
         console.error("Error loading saved form data:", e);
       }
     }
+    setUtmParams(getUTMParams());
   }, []);
 
   useEffect(() => {
@@ -181,6 +184,7 @@ const RaioXForm = () => {
     try {
       const payload = {
         ...formData,
+        ...utmParams,
         submittedAt: new Date().toISOString(),
       };
 
@@ -199,7 +203,7 @@ const RaioXForm = () => {
         return;
       }
 
-      console.log("Form submitted:", formData);
+      console.log("Form submitted:", payload);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
