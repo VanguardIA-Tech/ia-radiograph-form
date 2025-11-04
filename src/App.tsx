@@ -8,13 +8,14 @@ import NotFound from "./pages/NotFound";
 import Obrigado from "./pages/Obrigado";
 
 const queryClient = new QueryClient();
+const basePath = import.meta.env.VITE_BASE_PATH || "/form";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={basePath}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/obrigado" element={<Obrigado />} />
