@@ -2,11 +2,9 @@ import { CheckCircle2, Linkedin, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
-const calendlyUrl = (import.meta.env.VITE_CALENDLY_URL as string | undefined)?.trim();
-
 const FormSuccess = () => {
   const handleCTA = () => {
-    window.open("https://wa.me/5591999999999", "_blank", "noopener,noreferrer");
+    window.open("https://w.app/grupovanguardia", "_blank", );
   };
 
   return (
