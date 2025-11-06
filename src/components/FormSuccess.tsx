@@ -113,7 +113,7 @@ const FormSuccess = () => {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://wa.me/5591999999999"
+              href="https://w.app/grupovanguardia"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
@@ -123,7 +123,7 @@ const FormSuccess = () => {
               WhatsApp
             </a>
             <a
-              href="https://www.linkedin.com/company/vanguardia"
+              href="https://www.linkedin.com/company/grupovanguardiabr/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
@@ -133,7 +133,7 @@ const FormSuccess = () => {
               LinkedIn
             </a>
             <a
-              href="https://www.instagram.com/vanguardia"
+              href="https://www.instagram.com/grupovanguard.ia/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
