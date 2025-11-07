@@ -185,6 +185,7 @@ const RaioXForm = () => {
       const payload = {
         ...formData,
         ...utmParams,
+        funil: "raiox"
         submittedAt: new Date().toISOString(),
       };
 
