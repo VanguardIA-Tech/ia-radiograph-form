@@ -1,6 +1,6 @@
 import Clarity from "@microsoft/clarity";
 
-export function initClarity() {
+export function initClarity(): string | undefined {
   // Em runtime, busca CLARITY_ID de:
   // 1. window.CLARITY_ID (injetado pelo container/EasyPanel via script ou env)
   // 2. window.__APP_CONFIG__.clarityId (se existir)
@@ -14,8 +14,9 @@ export function initClarity() {
     if (import.meta.env.MODE !== "production") {
       console.warn("[Clarity] CLARITY_ID não encontrado. Tracking desabilitado.");
     }
-    return;
+    return undefined;
   }
 
   Clarity.init(projectId);
+  return projectId;
 }

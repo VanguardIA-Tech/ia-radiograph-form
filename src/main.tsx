@@ -10,6 +10,9 @@ import { initClarity } from "./lib/clarity";
 //     window.CLARITY_ID = 'seu_clarity_id_aqui';
 //   </script>
 //   <script src="/assets/index.js"></script>
-initClarity();
+const clarityId = initClarity();
+if (clarityId) {
+  localStorage.setItem('CLARITY_PROJECT_ID', clarityId);
+}
 
 createRoot(document.getElementById("root")!).render(<App />);
