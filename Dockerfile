@@ -18,7 +18,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build args - variáveis de ambiente do EasyPanel
-ARG VITE_CLARITY_ID=""
+ARG VITE_CLARITY_ID="tybowyyue1"
 
 # Definir variáveis de ambiente para o build
 ENV VITE_CLARITY_ID=${VITE_CLARITY_ID}
@@ -33,6 +33,9 @@ RUN test -d /app/dist && test -f /app/dist/index.html || (echo "❌ ERROR: Build
 # Stage 2: Serve (Nginx)
 # ============================================
 FROM nginx:alpine
+
+# Instalar curl para healthcheck HTTP
+RUN apk add --no-cache curl
 
 # Remover config padrão do Nginx
 RUN rm /etc/nginx/conf.d/default.conf
@@ -51,7 +54,7 @@ EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
+  CMD curl -f http://localhost/ || exit 1
 
 # Comando de inicialização
 CMD ["nginx", "-g", "daemon off;"]
