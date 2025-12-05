@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Obrigado from "./pages/Obrigado";
 import ClarityRouteTags from "@/components/clarity/ClarityRouteTags";
 import ClickTracker from "@/components/clarity/ClickTracker";
 import { UtmCollector } from "@/components/clarity/UtmCollector";
@@ -34,6 +35,7 @@ const App = () => (
         <ClickTracker />
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/obrigado" element={<Obrigado />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

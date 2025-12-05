@@ -1,73 +1,153 @@
-import { CheckCircle2, Calendar } from "lucide-react";
+import { CheckCircle2, Linkedin, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const FormSuccess = () => {
-  const [dots, setDots] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
+  const handleCTA = () => {
+    window.open("https://w.app/grupovanguardia", "_blank", );
+  };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 text-center">
-      <div className="flex justify-center">
-        <div className="w-20 h-20 rounded-full bg-gradient-primary flex items-center justify-center animate-in zoom-in duration-700">
-          <CheckCircle2 className="w-12 h-12 text-white" />
+    <div className="space-y-10 animate-in fade-in duration-500">
+      {/* HERO / CONFIRMAÇÃO */}
+      <section className="text-center space-y-6">
+        <div className="flex justify-center">
+          <div className="w-20 h-20 rounded-full bg-gradient-primary flex items-center justify-center shadow-medium">
+            <CheckCircle2 className="w-12 h-12 text-white" />
+          </div>
         </div>
-      </div>
 
-      <div className="space-y-3">
-        <h2 className="text-3xl font-bold text-foreground">
-          Perfeito! 🎉
-        </h2>
-        <p className="text-lg text-muted-foreground">
-          Estamos processando seu Raio-X agora{dots}
-        </p>
-      </div>
+        <div className="space-y-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            Perfeito. Seu Raio-X de Eficiência com IA está sendo preparado.
+          </h2>
+          <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Em até 5 minutos você receberá no WhatsApp e no seu e-mail
+            o relatório completo com oportunidades reais de automação e eficiência.
+          </p>
+        </div>
+      </section>
 
-      <div className="bg-secondary/50 p-6 rounded-xl border border-border space-y-2">
-        <p className="text-sm font-medium text-foreground">
-          📱 Em até 5 minutos você receberá no WhatsApp e e-mail:
+      {/* BLOCO 2 — CHAMADA PARA AÇÃO HUMANA */}
+      <section className="bg-secondary/50 border border-border rounded-xl p-6 md:p-8 space-y-4 text-center md:text-left">
+        <h3 className="text-xl md:text-2xl font-bold text-foreground">
+          A próxima etapa é conversar com um dos nossos consultores sêniores de Eficiência com IA, para empresas com mais de 30 colaboradores.
+        </h3>
+        <p className="text-sm md:text-base text-muted-foreground">
+          Eles vão te mostrar como aplicar cada insight do relatório
+          em um plano real de integração com IA na sua empresa.
         </p>
-        <ul className="text-sm text-muted-foreground space-y-1 text-left max-w-md mx-auto">
-          <li>✓ Análise personalizada da sua empresa</li>
-          <li>✓ Oportunidades de eficiência com IA</li>
-          <li>✓ Recomendações específicas para seu setor</li>
-          <li>✓ Próximos passos para implementação</li>
-        </ul>
-      </div>
 
-      <div className="space-y-4 pt-4">
-        <p className="text-sm font-medium text-foreground">
-          Quer acelerar ainda mais?
-        </p>
-        <Button 
-          size="lg" 
-          className="bg-gradient-primary hover:opacity-90 transition-opacity text-white h-14 px-8"
-          onClick={() => window.open('https://wa.me/5591999999999', '_blank')}
-          data-cta="form:agendar-diagnostico-completo"
+        <div className="pt-2 flex justify-center">
+          <Button
+            size="lg"
+            onClick={handleCTA}
+            className="h-12 px-6 bg-gradient-primary hover:opacity-90 text-white font-semibold w-full sm:w-auto"
+            data-cta="form:agendar-diagnostico-completo"
         >
-          <Calendar className="w-5 h-5 mr-2" />
-          Agendar Diagnóstico Completo
-        </Button>
-        <p className="text-xs text-muted-foreground">
-          Um consultor sênior vai te mostrar como aplicar cada insight do seu relatório.
-        </p>
-      </div>
+            Agendar Diagnóstico Completo (gratuito)
+          </Button>
+        </div>
+      </section>
 
-      <div className="pt-8 border-t border-border">
-        <p className="text-sm text-muted-foreground">
-          Eficiência que liberta.
-        </p>
-        <p className="text-xs text-muted-foreground mt-1">
-          © 2026 Grupo VanguardIA
-        </p>
-      </div>
+      {/* BLOCO 3 — PROVA DE VALOR / CASES */}
+      <section className="space-y-4">
+        <Carousel className="w-full max-w-4xl mx-auto">
+          <CarouselContent>
+            <CarouselItem className="md:basis-1/3">
+              <div className="h-full rounded-xl border border-border bg-card p-5 shadow-soft flex items-center justify-center text-center">
+                <p className="text-sm md:text-base font-semibold">
+                  Rede Mais Saúde — 25 dias → 3 dias.
+                </p>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="md:basis-1/3">
+              <div className="h-full rounded-xl border border-border bg-card p-5 shadow-soft flex items-center justify-center text-center">
+                <p className="text-sm md:text-base font-semibold">
+                  Silveira Athias — IA em 100 % dos fluxos.
+                </p>
+              </div>
+            </CarouselItem>
+            <CarouselItem className="md:basis-1/3">
+              <div className="h-full rounded-xl border border-border bg-card p-5 shadow-soft flex items-center justify-center text-center">
+                <p className="text-sm md:text-base font-semibold">
+                  DO IT Hub — 300 % + de eficiência operacional.
+                </p>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+          <div className="hidden md:flex items-center justify-center gap-3 mt-3">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        </Carousel>
+      </section>
+
+      {/* BLOCO 4 — EXCLUSIVIDADE / URGÊNCIA + CTA */}
+      <section className="space-y-5">
+        <div className="rounded-xl border border-border p-6 md:p-8 bg-card text-center md:text-left">
+          <p className="text-sm md:text-base text-foreground">
+            Este programa é exclusivo e personalizado, faz parte da seleção das apenas 100 empresas selecionadas para integração corporativa de IA no Brasil.
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <Button
+            size="lg"
+            className="h-14 px-8 bg-gradient-primary hover:opacity-90 text-white font-bold"
+            onClick={handleCTA}
+          >
+            Garantir meu diagnóstico agora →
+          </Button>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="pt-8 border-t border-border">
+        <div className="flex flex-col items-center gap-4">
+          <img
+            src="https://res.cloudinary.com/dcg2hwh7x/image/upload/v1754072812/Avatar_e_Logos_Vanguardia_Prancheta_1_co%CC%81pia_10_2_fo95dj.png"
+            alt="VanguardIA logo"
+            loading="lazy"
+            className="w-12 h-12 object-contain"
+          />
+          <p className="text-sm text-muted-foreground">Eficiência que liberta.</p>
+
+          <div className="flex items-center gap-4">
+            <a
+              href="https://w.app/grupovanguardia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
+              aria-label="Fale conosco no WhatsApp"
+            >
+              <Phone className="h-4 w-4" />
+              WhatsApp
+            </a>
+            <a
+              href="https://www.linkedin.com/company/grupovanguardiabr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
+            </a>
+            <a
+              href="https://www.instagram.com/grupovanguard.ia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-foreground hover:text-primary transition-smooth"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-4 w-4" />
+              Instagram
+            </a>
+          </div>
+
+          <p className="text-xs text-muted-foreground mt-1">© 2025 Grupo VanguardIA</p>
+        </div>
+      </footer>
     </div>
   );
 };
