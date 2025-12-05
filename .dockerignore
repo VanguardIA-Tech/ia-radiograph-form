@@ -1,7 +1,9 @@
 node_modules
 npm-debug.log
 pnpm-debug.log
+yarn-error.log
 dist
+build
 .DS_Store
 .env
 .env.local
@@ -9,8 +11,15 @@ dist
 .git
 .gitignore
 .vscode
+.idea
 *.swp
 *.swo
 *.tmp
 *.bak
 coverage
+.coverage
+.nyc_output
+*.log
+.turbo
+.next
+out
