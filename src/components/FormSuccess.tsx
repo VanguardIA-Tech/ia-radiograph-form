@@ -50,6 +50,7 @@ const FormSuccess = () => {
           size="lg" 
           className="bg-gradient-primary hover:opacity-90 transition-opacity text-white h-14 px-8"
           onClick={() => window.open('https://wa.me/5591999999999', '_blank')}
+          data-cta="form:agendar-diagnostico-completo"
         >
           <Calendar className="w-5 h-5 mr-2" />
           Agendar Diagnóstico Completo
